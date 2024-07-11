@@ -12,8 +12,10 @@ def draw_road(terrain: ndarray) -> ndarray:
     max_x, max_y = terrain.shape
 
     # Generate random points, ensuring start and end points are at the edges
-    x = array([0] + list(randint(1, max_x - 1, 3)) + [max_x - 1])
-    y = array([0] + list(randint(1, max_y - 1, 3)) + [max_y - 1])
+    x = array([0 + ROAD_WIDTH] + list(randint(ROAD_WIDTH + 1,
+              max_x - 1 - ROAD_WIDTH, 3)) + [max_x - 1 - ROAD_WIDTH])
+    y = array([0 + ROAD_WIDTH] + list(randint(ROAD_WIDTH + 1,
+              max_y - 1 - ROAD_WIDTH, 3)) + [max_y - 1 - ROAD_WIDTH])
 
     # Interpolate points to create a smooth curve
     tck, u = splprep([x, y], s=0)
@@ -31,6 +33,15 @@ def draw_road(terrain: ndarray) -> ndarray:
         if x1 >= 0 and x1 < max_x and y1 >= 0 and y1 < max_y:
             terrain[x1, y1] = 1
 
-    # terrain = gaussian_filter(terrain, sigma=1)
+        for j in range(-ROAD_WIDTH // 2, ROAD_WIDTH//2):
+            for k in range(-ROAD_WIDTH // 2, ROAD_WIDTH//2):
+                if x0 + j >= 0 and x0 + j < max_x and y0 + k >= 0 and y0 + k < max_y:
+                    terrain[x0 + j, y0 + k] = 1
+
+                if x1 + j >= 0 and x1 + j < max_x and y1 + k >= 0 and y1 + k < max_y:
+                    terrain[x1 + j, y1 + k] = 1
+
+    for px, py in zip(x, y):
+        terrain[px, py] += 1
 
     return terrain
