@@ -7,7 +7,7 @@ from scipy.ndimage import gaussian_filter
 ROAD_WIDTH: int = 10
 
 
-def draw_road(terrain: ndarray) -> ndarray:
+def draw_road(terrain: ndarray) -> tuple:
     # Determine terrain size
     max_x, max_y = terrain.shape
 
@@ -44,4 +44,4 @@ def draw_road(terrain: ndarray) -> ndarray:
     for px, py in zip(x, y):
         terrain[px, py] += 1
 
-    return terrain
+    return terrain, list(zip(out[0], out[1]))
