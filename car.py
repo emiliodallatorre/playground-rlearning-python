@@ -22,9 +22,9 @@ class Car:
         for sensor in self.sensors:
             # Rotate sensor position
             rotated_x = math.cos(angle) * \
-                sensor[0] - math.sin(angle) * sensor[1]
+                        sensor[0] - math.sin(angle) * sensor[1]
             rotated_y = math.sin(angle) * \
-                sensor[0] + math.cos(angle) * sensor[1]
+                        sensor[0] + math.cos(angle) * sensor[1]
 
             # Translate rotated sensor position to absolute position
             sensor_position = (
@@ -33,7 +33,7 @@ class Car:
 
         return result
 
-    def move(self, sensor_values: list[tuple]) -> tuple:
+    def move(self, sensor_values: list[int]) -> tuple:
         determined_direction: tuple = self.determine_direction(sensor_values)
 
         # Update car's position and direction
@@ -42,6 +42,8 @@ class Car:
 
         self.direction = determined_direction
 
-    def determine_direction(self, sensor_values: list[tuple]) -> tuple:
+        return self.position
+
+    def determine_direction(self, sensor_values: list[int]) -> tuple:
         # Placeholder for actual logic
         return (1, 1)
